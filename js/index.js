@@ -4,11 +4,11 @@ let triggeredCounters = false;
     $.fn.countTo = function(options) {
         options = $.extend({}, $.fn.countTo.defaults, options || {});
         
-        var loops = Math.ceil(options.speed / options.refreshInterval),
+        const loops = Math.ceil(options.speed / options.refreshInterval),
             increment = (options.to - options.from) / loops;
         
         return $(this).each(function() {
-            var _this = this,
+            let _this = this,
                 loopCount = 0,
                 value = options.from,
                 interval = setInterval(updateTimer, options.refreshInterval);
@@ -47,8 +47,9 @@ let triggeredCounters = false;
 
 
 (function() {
-    $.fn.isInViewport = function(element) {
-        var distance = element.getBoundingClientRect();
+    $.fn.isInViewport = function() {
+        const distance = this[0].getBoundingClientRect();
+
         return (
             distance.top >= 0 &&
             distance.left >= 0 &&
@@ -62,7 +63,7 @@ window.addEventListener('scroll', (event) => {
     if (!triggeredCounters) {
         jQuery(function($) {
             document.querySelectorAll('.counter').forEach((element) => {
-                if ($().isInViewport(element)) {
+                if ($(element).isInViewport()) {
                     const classes = element.className.split(' ');
                     classes[classes.length - 1] += '-counter';
     

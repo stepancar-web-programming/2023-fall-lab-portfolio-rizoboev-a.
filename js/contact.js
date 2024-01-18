@@ -53,6 +53,29 @@ function drawChart() {
 }
 
 $(document).ready(function() {
+    function validateInput(inputSelector, validate) {
+        const isValid = validate($(inputSelector).val());
+
+        if (isValid) {
+            $(inputSelector).removeClass('is-invalid');
+        } else {
+            $(inputSelector).addClass('is-invalid');
+        }
+
+        return isValid;
+    }
+
+    function validateContact() {
+        let isValid = true;
+
+        isValid &= validateInput('#firstName', value => value.trim() !== '');
+        isValid &= validateInput('#lastName', value => value.trim() !== '');
+        isValid &= validateInput('#email', value => value === '' || /^\S+@\S+\.\S+$/.test(value));
+        isValid &= validateInput('#message', value => value.trim() !== '');
+
+        return isValid;
+    }
+
     function submitContact() {
         event.preventDefault();
 
@@ -63,39 +86,41 @@ $(document).ready(function() {
             message: $('#message').val()
         };
 
-        const discordWebhookUrl = 'https://discord.com/api/webhooks/1176899644391948299/0aiSmNEpooTGX_Us2qkinTIxtO2TGY4XiqMbawT-yL5uiNYUyE9NPbIe_aN9MSI0uri7';
+        if (validateContact()) {
+            const discordWebhookUrl = 'https://discord.com/api/webhooks/1176899644391948299/0aiSmNEpooTGX_Us2qkinTIxtO2TGY4XiqMbawT-yL5uiNYUyE9NPbIe_aN9MSI0uri7';
 
-        $.ajax({
-            url: discordWebhookUrl,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                embeds: [{
-                    title: "Получено новое сообщение",
-                    description: 'Сообщение:\n' + formData.message,
-                    fields: [
-                        { name: 'Имя', value: formData.firstName, inline: true },
-                        { name: 'Фамилия', value: formData.lastName, inline: true },
-                        { name: 'E-mail', value: formData.email || 'Тут небо', inline: false }
-                    ],
-                    color: 5814783
-                }]
-            }),
-            success: function(response) {
-                new Toast({
-                    message: 'Ваше сообщение успешно отправлено.',
-                    type: 'success'
-                });
-            },
-            error: function(xhr, status, error) {
-                new Toast({
-                    message: 'Во время отправки сообщения произошла ошибка. Подробности в консоли.',
-                    type: 'danger'
-                });
+            $.ajax({
+                url: discordWebhookUrl,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    embeds: [{
+                        title: "Получено новое сообщение",
+                        description: 'Сообщение:\n' + formData.message,
+                        fields: [
+                            { name: 'Имя', value: formData.firstName, inline: true },
+                            { name: 'Фамилия', value: formData.lastName, inline: true },
+                            { name: 'E-mail', value: formData.email || 'Тут небо', inline: false }
+                        ],
+                        color: 5814783
+                    }]
+                }),
+                success: function(response) {
+                    new Toast({
+                        message: 'Ваше сообщение успешно отправлено.',
+                        type: 'success'
+                    });
+                },
+                error: function(xhr, status, error) {
+                    new Toast({
+                        message: 'Во время отправки сообщения произошла ошибка. Подробности в консоли.',
+                        type: 'danger'
+                    });
 
-                console.error('Submission failed:', error);
-            }
-        });
+                    console.error('Submission failed:', error);
+                }
+            });
+        }
     }
 
     $('.needs-validation').submit(submitContact);
