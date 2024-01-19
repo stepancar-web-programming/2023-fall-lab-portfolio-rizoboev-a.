@@ -64,28 +64,25 @@ window.addEventListener('scroll', (event) => {
         jQuery(function($) {
             document.querySelectorAll('.counter').forEach((element) => {
                 if ($(element).isInViewport()) {
-                    const classes = element.className.split(' ');
-                    classes[classes.length - 1] += '-counter';
-    
-                    element.className = classes.join(' ');
-                        $('.years-counter').countTo({
-                            from: 0,
-                            to: 5,
-                            speed: 2000,
-                            refreshInterval: 20
-                        });
-                        $('.members-counter').countTo({
-                            from: 0,
-                            to: 7915,
-                            speed: 3000,
-                            refreshInterval: 20
-                        });
-                        $('.players-average-counter').countTo({
-                            from: 0,
-                            to: 3215,
-                            speed: 3000,
-                            refreshInterval: 20
-                        });
+                    $('.years-counter').countTo({
+                        from: 0,
+                        to: 5,
+                        speed: 2000,
+                        refreshInterval: 20
+                    });
+                    $('.members-counter').countTo({
+                        from: 0,
+                        to: 7915,
+                        speed: 3000,
+                        refreshInterval: 20
+                    });
+                    $('.players-average-counter').countTo({
+                        from: 0,
+                        to: 3215,
+                        speed: 3000,
+                        refreshInterval: 20
+                    });
+                    
                     triggeredCounters = true;
                 }
             });

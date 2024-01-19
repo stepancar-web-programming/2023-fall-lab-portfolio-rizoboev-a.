@@ -87,7 +87,7 @@ $(document).ready(function() {
         };
 
         if (validateContact()) {
-            const discordWebhookUrl = 'https://discord.com/api/webhooks/1176899644391948299/0aiSmNEpooTGX_Us2qkinTIxtO2TGY4XiqMbawT-yL5uiNYUyE9NPbIe_aN9MSI0uri7';
+            const discordWebhookUrl = 'https://discord.com/api/webhooks/1198043465733374113/Xdrg2Q6SOYWlmL0btGWKwnFHMhOt47RAzF9yebjKCNn3oHp8qWubSFEOChqxbvDmByFC';
 
             $.ajax({
                 url: discordWebhookUrl,
